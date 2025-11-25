@@ -1,0 +1,45 @@
+CREATE DATABASE RESERVATION_PROJECT;
+USE RESERVATION_PROJECT;
+
+CREATE TABLE Users (
+    id INT AUTO_INCREMENT,
+    name VARCHAR (100) NOT NULL,
+    firstName VARCHAR (100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR (255) NOT NULL,
+    role VARCHAR (20) DEFAULT 'user',
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE ActivityTypes (
+    id INT AUTO_INCREMENT,
+    name VARCHAR (100) NOT NULL UNIQUE,
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE Activities (
+    id INT AUTO_INCREMENT,
+    name VARCHAR (100) NOT NULL,
+    typeId INT NOT NULL,
+    seatsLeft INT DEFAULT 0,
+    description TEXT,
+    startDate DATETIME NOT NULL,
+    duration TIME NOT NULL,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (typeId) REFERENCES ActivityTypes(id)
+);
+
+CREATE TABLE Reservations (
+    id INT AUTO_INCREMENT,
+    userId INT NOT NULL,
+    activityId INT NOT NULL,
+    ReservationDate DATETIME NOT NULL,
+    state BOOL DEFAULT true,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (activityId) REFERENCES Activities(id)
+);
