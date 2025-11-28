@@ -50,7 +50,7 @@ class UserModel extends Bdd{
     return True;
   }
 
-    public function logIn(string $email, $password): array | false
+    public function logIn(string $email, $password): array | string
   {
     $request = $this->co->prepare('SELECT * FROM Users WHERE email = :email LIMIT 1');
     $request->execute([
@@ -59,13 +59,13 @@ class UserModel extends Bdd{
     $user = $request->fetch();
 
     if(!$user) {
-      return false;
+      return 'noUser';
     } 
 
     if (password_verify($password, $user['password'])) {
       return $user;
     } else {
-      return false;
+      return 'passwordIncorrect';
     }
   }
 }

@@ -50,11 +50,24 @@ class UserController{
     $password = $_POST['password'];
 
     if (empty($email) || empty($password)) {
+        $data['error'] = 'champ vides';
         $this->renderView('user/logIn', $data);
         return;
     }
 
     $user = $userModel->logIn( $email, $password);
+
+    if ($user == "noUser") {
+      $data['error'] = 'no user with this email exist';
+      $this->renderView('user/logIn', $data);
+      return;
+    }
+
+    if ($user == "passwordIncorrect") {
+      $data['error'] = 'password incorrect';
+      $this->renderView('user/logIn', $data);
+      return;
+    }
 
     $_SESSION['id'] = $user['id'];
     $_SESSION['name'] = $user['name'];
@@ -100,5 +113,12 @@ class UserController{
     $userModel->signUp($name, $firstname, $email, $passwordhash);
     header('Location: logIn');
     return;
+  }
+  
+  public function logOut()
+  {
+    session_unset();
+    session_destroy();
+    header('Location: findAll');
   }
 }
