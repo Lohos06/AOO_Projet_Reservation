@@ -54,7 +54,14 @@ class UserController{
         return;
     }
 
-    $userModel->logIn( $email, $password);
+    $user = $userModel->logIn( $email, $password);
+
+    $_SESSION['id'] = $user['id'];
+    $_SESSION['name'] = $user['name'];
+    $_SESSION['firstname'] = $user['firstname'];
+    $_SESSION['email'] = $user['email'];
+
+    header('Location: findAll');
     return;
   }
 
@@ -76,6 +83,12 @@ class UserController{
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    if ($userModel->findOneByEmail($email) != false) {
+      $data['error'] = 'email deja utilisé';
+      $this->renderView('user/signUp', $data);
+      return;
+    }
+
     if (empty($name) || empty($firstname) || empty($email) || empty($password)) {
       $data['error'] = 'champ vide';
         $this->renderView('user/signUp', $data);
@@ -85,7 +98,7 @@ class UserController{
     $passwordhash = password_hash($password, PASSWORD_DEFAULT);
 
     $userModel->signUp($name, $firstname, $email, $passwordhash);
-    header('Location: user/login');
+    header('Location: logIn');
     return;
   }
 }

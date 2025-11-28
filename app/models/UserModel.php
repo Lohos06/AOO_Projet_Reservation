@@ -25,6 +25,16 @@ class UserModel extends Bdd{
     return $users->fetch();
   }
 
+    public function findOneByEmail(string $email): array | false
+  {
+    $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email LIMIT 1');
+    $users->execute([
+      ':email' => $email
+    ]);
+ 
+    return $users->fetch();
+  }
+
     public function signUp($name, $firstname, $email, $passwordhash) : bool
   {
     $userSignUp = $this->co->prepare('INSERT INTO Users (name, firstname, email, password, role) 
@@ -50,7 +60,7 @@ class UserModel extends Bdd{
 
     if(!$user) {
       return false;
-    }
+    } 
 
     if (password_verify($password, $user['password'])) {
       return $user;

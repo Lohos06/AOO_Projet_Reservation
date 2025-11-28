@@ -6,13 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="">
+    <form action="" method ="POST">
         <fieldset>          
             <legend>Identifiants</legend>
             <label for="email">email</label>
-            <input type="text" id="email">
+            <input type="text" id="email" name="email">
             <label for="password">password</label>
-            <input type="text" id="password">
+            <input type="password" id="password" name="password">
         </fieldset>
         <input type="submit" value="Submit">
     </form>

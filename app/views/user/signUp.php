@@ -27,7 +27,7 @@ if (!empty($data['error'])) {
             <label for="email">email</label>
             <input type="text" id="email" name="email">
             <label for="password">password</label>
-            <input type="text" id="password" name="password">
+            <input type="password" id="password" name="password">
         </fieldset>
         <input type="submit" value="Submit">
     </form>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="../../CSS/variable.css">
+    <link rel="stylesheet" href="CSS/variable.css">
     <!-- <link rel="stylesheet" href="/assets/style.css"> -->
 
     <title><?= $title ?? 'Mon titre par défaut' ?></title>
@@ -17,6 +17,14 @@
           <a href="/user/signUp">Inscription</a>
           <a href="/user/logIn">Connexion</a>
         </nav>
+        <?php 
+        if(isset($_SESSION['name']) && !empty($_SESSION['name'])) {
+            echo $_SESSION['id'];
+            echo $_SESSION['name'];
+            echo $_SESSION['firstname'];
+            echo $_SESSION['email'];
+        }
+        ?>
     </header>
     
     <main>
