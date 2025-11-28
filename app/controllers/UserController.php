@@ -57,14 +57,8 @@ class UserController{
 
     $user = $userModel->logIn( $email, $password);
 
-    if ($user == "noUser") {
-      $data['error'] = 'no user with this email exist';
-      $this->renderView('user/logIn', $data);
-      return;
-    }
-
-    if ($user == "passwordIncorrect") {
-      $data['error'] = 'password incorrect';
+    if ($user == false) {
+      $data['error'] = 'email or password incorrect';
       $this->renderView('user/logIn', $data);
       return;
     }
