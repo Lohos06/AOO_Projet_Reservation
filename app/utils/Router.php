@@ -8,7 +8,7 @@ class Router{
     // Découpe en tableau l'URL
     $url = explode('/', $url);
  
-    // Le premier élément de l'URL est le contrôleur
+    // Le premier élément de l'URL est le contrôleur (si aucun, user par defaut)
     if(empty($url[0])){
       $url[0] = 'User';
     }
@@ -20,7 +20,7 @@ class Router{
     if(isset($url[1])){
       $methodName = $url[1];
     }
-    else{
+    else{ // si aucun parametre, findAll par defaut
       $methodName = 'findAll';
     }
     

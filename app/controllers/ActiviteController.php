@@ -9,7 +9,7 @@ class ActiviteController
     use Render;
 
     /*Affiche ttes les activités*/
-    public function index(): void
+    public function findAll(): void
     {
         $model = new ActiviteModel();
         $activites = $model->getAllActivities();

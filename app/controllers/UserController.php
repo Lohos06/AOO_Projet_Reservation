@@ -6,6 +6,7 @@ class UserController{
 
     use Render;
 
+  // fonction d'affichage de la liste des utilisateurs
   public function findAll(): void
   {
     $userModel = new UserModel();
@@ -21,6 +22,7 @@ class UserController{
     $this->renderView('user/all', $data);
   }
  
+  // fonction d'affichage d'un seul utilisateur par son id
   public function findOneById(int $id): void
   {
     $userModel = new UserModel();
@@ -34,6 +36,7 @@ class UserController{
     $this->renderView('user/one', $data);
   }
 
+  // fonction recuperant les champs du formulaire de connexion, les traites et les envoie au model
     public function logIn(): void
   {
     $userModel = new UserModel();
@@ -72,6 +75,7 @@ class UserController{
     return;
   }
 
+    // fonction recuperant les champs du formulaire d'inscription , les traites et les envoie au model
     public function signUp(): void
   {
     $userModel = new UserModel();
@@ -109,6 +113,7 @@ class UserController{
     return;
   }
   
+  // fonction pour se deconnecter
   public function logOut()
   {
     session_unset();

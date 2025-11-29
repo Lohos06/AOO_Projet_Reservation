@@ -6,6 +6,7 @@ class UserModel extends Bdd{
     parent::__construct();
   }
  
+  // fonction pour recuperer la liste de tout les utilisateurs
   public function findAll(): array
   {
     $users = $this->co->prepare('SELECT * FROM users');
@@ -14,10 +15,10 @@ class UserModel extends Bdd{
     return $users->fetchAll();
   }
  
-  public function findOneById(int $id): User | false
+  // fonction pour trouver un utilisateur par son id
+  public function findOneById(int $id): array | false
   {
     $users = $this->co->prepare('SELECT * FROM Users WHERE id = :id LIMIT 1');
-    $users->setFetchMode(PDO::FETCH_CLASS, 'User');
     $users->execute([
       ':id' => $id
     ]);
@@ -25,6 +26,7 @@ class UserModel extends Bdd{
     return $users->fetch();
   }
 
+  // fonction pour trouver un utilisateur par son email
     public function findOneByEmail(string $email): array | false
   {
     $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email LIMIT 1');
@@ -35,6 +37,7 @@ class UserModel extends Bdd{
     return $users->fetch();
   }
 
+  // fonction pour enregister un utilisateur en base de donnée
     public function signUp($name, $firstname, $email, $passwordhash) : bool
   {
     $userSignUp = $this->co->prepare('INSERT INTO Users (name, firstname, email, password, role) 
@@ -50,6 +53,7 @@ class UserModel extends Bdd{
     return True;
   }
 
+  // fonction pour verifier une tentative de connexion
     public function logIn(string $email, $password): array | false
   {
     $request = $this->co->prepare('SELECT * FROM Users WHERE email = :email LIMIT 1');
