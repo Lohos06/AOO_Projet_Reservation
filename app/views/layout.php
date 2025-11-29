@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="/CSS/destyle.css">
     <link rel="stylesheet" href="/CSS/variables.css">
+    <link rel="stylesheet" href="/CSS/header.css">
 
     <title><?= $title ?? 'Mon titre par défaut' ?></title>
 </head>
