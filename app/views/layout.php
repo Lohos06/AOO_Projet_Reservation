@@ -14,13 +14,18 @@
     <header>
         <h1>Reservation Project</h1>
         <nav>
+        <!-- Lien vers les pages utilisateurs-->
           <a href="/user/findAll">Liste des utilisateurs</a>
           <a href="/user/signUp">Inscription</a>
           <a href="/user/logIn">Connexion</a>
           <a href="/user/logOut">Deconnexion</a>
 
-        <!-- MENU ACTIVITÉS -->
-            <a href="/activite/findAll">Activités</a>
+        <!-- Lien vers les pages activités -->
+            <a href="/activite/findAll">Liste desActivités</a>
+
+        <!-- Lien vers les pages de reservation -->
+            <a href="/reservation/findAll">Liste des Reservations</a>
+            <a href="/reservation/AjouterReservation">Reserver</a>
 
             <!-- Si admin : lien pour ajouter une activité -->
             <?php if (!empty($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
