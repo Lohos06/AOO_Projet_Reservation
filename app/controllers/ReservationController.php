@@ -1,5 +1,6 @@
 <?php
 require_once './app/utils/Render.php';
+require_once './app/models/ReservationModel.php';
 
 class ReservationController{
 
@@ -7,8 +8,8 @@ class ReservationController{
 
   public function findAll(): void
   {
-    $reservationModel = new UserModel();
-    $reservations = $reservationModel->findAll();
+    $reservationModel = new reservationModel();
+    $reservations = $reservationModel->getAllReservations();
  
     // Prépatation du tableau à envoyer au layout
     $data = [
@@ -23,7 +24,7 @@ class ReservationController{
   public function findOneById(int $id): void
   {
     $reservationModel = new ReservationModel();
-    $reservation = $reservationModel->findOneById($id);
+    $reservation = $reservationModel->getReservationsByUserId($id);
     $data = [
       'title' => 'Une réservation',
       'reservation' => $reservation
@@ -40,12 +41,11 @@ class ReservationController{
       'title' => 'ajouter une réservation',
     ];
 
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') { // si la methode est bien une methode POST
-      $this->renderView('reservation/all', $data);
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') { // si la methode n'est pas une methode POST
+      $this->renderView('reservation/inserer', $data);
       return;
     }
-
-    $userId = $_POST['userId'];// on récupère le requète du formulaire
+    $userId = $_POST['userId'] ?? null;
     $activityId = $_POST['activityId'];
 
     if (empty($userId) || empty($activityId)) {// si c'est vide 
@@ -78,7 +78,7 @@ class ReservationController{
       $data = [
       'title' => 'enlever une réservation',
     ];
-     $reservation = $reservationModel->createReservation( $userID, $activityId);// utilisé la methode create du model
+     $reservation = $reservationModel->cancelReservation( $userID, $activityId);// utilisé la methode create du model
 
       if ($reservation == false) {// si le résultat de la methode est false alors on envoie un message d'erreur
       $data['error'] = 'echec de la suppression';

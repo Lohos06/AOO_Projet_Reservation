@@ -1,7 +1,8 @@
 <?php 
-echo "Reservation : <br>";
+echo "<h2> Reservation : </h2> <br>";
 foreach ($reservations as $reservation) {
-  echo '<h3> User :'. $reservation['userId'].'</h3>';
-  echo '<h3> Activité :'. $reservation['activityId'] .'</h3>';
+  echo '<br><hr>';
+  echo '<p> User :'. $reservation['userId'].'</p>';
+  echo '<p> Activité :'. $reservation['activityId'] .'</p>';
   echo '<p> Date de Réservation : ' . $reservation['ReservationDate'] . '</p>';
 }
