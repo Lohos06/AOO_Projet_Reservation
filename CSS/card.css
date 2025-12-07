@@ -3,7 +3,7 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
     padding: 40px;
-    text-align: center; /* Centre tout le texte */
+    text-align: center; /* centre tout le texte */
 }
 
 .card {
@@ -28,7 +28,7 @@ h2 {
     color: #0E4F37;
     text-align: center;
 }
-/* Faces de la carte */
+/* faces de la carte */
 .card-front, .card-back {
     position: absolute;
     width: 100%;
@@ -46,7 +46,7 @@ h2 {
     text-align: center;
 }
 
-/* Face avant */
+/* face avant */
 .card-front {
     background: #F4F1E6;
     color:  #0E4F37;
@@ -55,7 +55,7 @@ h2 {
     font-weight: bold;
 }
 
-/* Face arrière */
+/* face arrière */
 .card-back {
     background: #145c47;
     color: white;
@@ -64,7 +64,7 @@ h2 {
     font-size: 1.1rem;
 }
 
-/* Bouton */
+/* bouton */
 .btn-info {
     margin-top: 20px;
     background: white;
@@ -78,10 +78,10 @@ h2 {
 }
 
 .btn-info:hover {
-    background: #e6e6e6;
+    background: #000000;
     transform: scale(1.05);
 }
-/* Style de base commun aux pages activité ET réservation */
+/* style  commun aux pages activité et résa */
 .activity-card,
 .reservation-card {
     max-width: 600px;
@@ -95,7 +95,7 @@ h2 {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* Titres */
+/* titres */
 .activity-card h2,
 .reservation-card h2 {
     text-align: center;
@@ -103,14 +103,14 @@ h2 {
     color: #145c47;
 }
 
-/* Texte important */
+/* txte important */
 .activity-card p strong,
 .reservation-card p strong {
     color: #1f7f63;
     font-weight: bold;
 }
 
-/* Bouton de réservation */
+/* bouton de résa */
 .btn-reserver {
     display: inline-block;
     margin-top: 25px;
@@ -128,7 +128,7 @@ h2 {
     transform: scale(1.05);
 }
 
-/* --- Responsive --- */
+/*  Responsive  */
 @media (max-width: 900px) {
     .cards-container {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
