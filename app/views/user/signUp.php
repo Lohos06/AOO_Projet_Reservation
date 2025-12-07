@@ -1,25 +1,32 @@
-<?php
+<div class="form-card">
+    <h1>Créer un compte</h1>
 
-if (!empty($data['error'])) {
-    echo $data['error'];
-}
+    <form action="" method="POST">
 
-?>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" id="name" name="name">
+            </div>
 
-<form action="" method="POST">
-    <fieldset>
-        <legend>Identité</legend>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name">
-        <label for="firstname">FirstName</label>
-        <input type="text" id="firstname" name="firstname">
-    </fieldset>
-    <fieldset>          
-        <legend>Identifiants</legend>
-        <label for="email">email</label>
-        <input type="text" id="email" name="email">
-        <label for="password">password</label>
-        <input type="password" id="password" name="password">
-    </fieldset>
-    <input type="submit" value="Submit">
-</form>
+            <div class="form-group">
+                <label for="firstname">Prénom</label>
+                <input type="text" id="firstname" name="firstname">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password">
+        </div>
+
+        <button type="submit" class="btn-submit">S’inscrire</button>
+    </form>
+
+    <?php if (!empty($data['error'])) echo "<p class='error'>{$data['error']}</p>"; ?>
+</div>

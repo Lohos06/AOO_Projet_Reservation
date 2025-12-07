@@ -1,0 +1,144 @@
+/* contenant le form */
+.form-card {
+    background: #F4F1E6;
+    border: 2px solid #24a17c;
+    border-radius: 16px;
+    padding: 30px;
+    width: 450px;
+    margin: 40px auto;
+    color: #0b5f43;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* titre du form */
+.form-card h2 {
+    margin-top: 0;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color:#0b5f43;
+}
+
+/* bloc d'un champ */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+/* label du champ */
+.form-group label {
+    margin-bottom: 6px;
+    font-size: 1.1rem;
+}
+
+/*  textarea */
+.form-group input,
+.form-group textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+}
+
+/*  focus sur textarea */
+.form-group input:focus,
+.form-group textarea:focus {
+    box-shadow: 0 0 0 3px #24a17c;
+}
+
+/* bouton d’envoi */
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background: white;
+    color: #145c47;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+/* effet hover du bouton */
+.btn-submit:hover {
+    background: #e6e6e6;
+    transform: scale(1.05);
+}
+
+
+/* liste simple d’utilisateurs */
+.user-list {
+    margin-top: 2%;
+    padding: 0;
+}
+
+.user-list li {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.user-list h3 {
+    margin: 0;
+}
+
+
+/* responsive form (tablette)*/
+@media (max-width: 900px) {
+    .form-card {
+        width: 80%;
+        padding: 25px;
+    }
+
+    .form-card h2 {
+        font-size: 1.4rem;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    .btn-submit {
+        font-size: 0.95rem;
+        padding: 10px 16px;
+    }
+}
+
+/* responsive form (mobile)*/
+@media (max-width: 600px) {
+    .form-card {
+        width: 90%;
+        padding: 20px;
+        margin: 25px auto;
+    }
+
+    .form-card h2 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .btn-submit {
+        font-size: 0.9rem;
+        padding: 10px 14px;
+    }
+}

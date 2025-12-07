@@ -1,18 +1,20 @@
-<?php
+<div class="form-card">
+    <h1>Connexion</h1>
 
-if (!empty($data['error'])) {
-    echo $data['error'];
-}
+    <form action="" method="POST">
 
-?>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email">
+        </div>
 
-<form action="" method ="POST">
-    <fieldset>          
-        <legend>Identifiants</legend>
-        <label for="email">email</label>
-        <input type="text" id="email" name="email">
-        <label for="password">password</label>
-        <input type="password" id="password" name="password">
-    </fieldset>
-    <input type="submit" value="Submit">
-</form>
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password">
+        </div>
+
+        <button type="submit" class="btn-submit">Se connecter</button>
+    </form>
+
+    <?php if (!empty($data['error'])) echo "<p class='error'>{$data['error']}</p>"; ?>
+</div>

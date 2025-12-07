@@ -1,6 +1,13 @@
+<h2>Utilisateurs</h2>
+
+<ul class="user-list">
 <?php 
-echo "utilisateurs : <br>";
-foreach ($users as $user) {
-  echo '<h3>'. $user['name'] . $user['firstname'] .'</h3>';
-  echo '<p>' . $user['email'] . '</p>';
+foreach ($users as $user) { // parcours de tous les utilisateurs
+    echo '
+    <li>
+        <h3>' . htmlspecialchars($user["name"]) . ' ' . htmlspecialchars($user["firstname"]) . '</h3>
+        <p>' . htmlspecialchars($user["email"]) . '</p>
+    </li>';
 }
+?>
+</ul>

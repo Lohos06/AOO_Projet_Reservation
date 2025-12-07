@@ -1,23 +1,53 @@
-<?php
-if (isset($_SESSION['id'])) {
-  
-  echo '<h1>Reservation  de  '.$_SESSION['firstname'].$_SESSION['name'].' : </h1>';
-  $error = "cette information n'existe pas dans la base de donnée ";
-  echo '<br><hr><br>';
-  echo '<h2> Information utilisateur :</h2><br>';  
-  echo '<p> Id :'.$_SESSION['id'] .'</p>';
-  echo '<p> name :'.$_SESSION['name'].'</p>';
-  echo '<p> firstname :'.$_SESSION['firstname'].'</p>';
-  echo '<p>  email :'.$_SESSION['email'].'</p>';
+<?php if (isset($_SESSION['id'])): ?>
 
-  echo '<br><hr><br>';
-  echo '<h2> Information Reservation :</h2><br>';  
-  echo '<p> User Id :'.$_SESSION['userId'].'</p>';
-  echo '<p> Activité :'.$_SESSION['activityId'] .'</p>';
-  echo '<p> Date de Réservation : ' .$_SESSION['ReservationDate']. '</p>';
-}
-  else {
-   header('Location: /user/login');
-}
-  
+<div class="container">
 
+    <!-- carte gauche : infos utilisateur -->
+    <div class="left-card">
+        <div class="left-content">
+            <h2>Informations utilisateur</h2>
+            
+            <p><strong>Nom :</strong> <?= htmlspecialchars($_SESSION['name']) ?></p>
+            <p><strong>Prénom :</strong> <?= htmlspecialchars($_SESSION['firstname']) ?></p>
+            <p><strong>Email :</strong> <?= htmlspecialchars($_SESSION['email']) ?></p>
+        </div>
+    </div>
+
+    <!-- carte droite : ttes les réservations du user -->
+    <div class="right-card">
+
+        <h1>
+            Réservations de 
+            <?= htmlspecialchars($_SESSION['firstname']) . ' ' . htmlspecialchars($_SESSION['name']) ?>
+        </h1>
+
+
+
+        <h2>Informations réservation</h2>
+
+        <?php if (!empty($reservations)): ?>
+            <?php foreach ($reservations as $resa): ?>
+                <div class="resa-item">
+                    <p><strong>Activité :</strong> <?= htmlspecialchars($resa['activityName']) ?></p>
+                    <p><strong>Date de réservation :</strong> <?= htmlspecialchars($resa['ReservationDate']) ?></p>
+
+                    <a class="btn-delete"
+                      href="/reservation/enleverReservation/<?= $_SESSION['id'] ?>/<?= $resa['activityId'] ?>"
+                      onclick="return confirm('Voulez-vous vraiment supprimer cette réservation ?');">
+                      Supprimer la réservation
+                    </a>
+
+                    
+                </div>
+                
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Aucune réservation trouvée.</p>
+        <?php endif; ?>
+
+    </div>
+</div>
+
+<?php else: ?>
+    <?php header('Location: /user/login'); exit; ?>
+<?php endif; ?>

@@ -1,24 +1,26 @@
 <?php
 
 require_once './app/utils/Render.php';
+require_once './app/utils/Auth.php';
 
-class UserController{
-
+class UserController {
     use Render;
+    use Auth;
 
   // fonction d'affichage de la liste des utilisateurs
   public function findAll(): void
   {
+    $this->requireAdmin(); 
     $userModel = new UserModel();
     $users = $userModel->findAll();
  
-    // Prépatation du tableau à envoyer au layout
+    // prépatation du tableau à envoyer au layout
     $data = [
       'title' => 'Liste des utilisateurs',
       'users' => $users
     ];
  
-    // Rendu avec layout
+    // rendu avec layout
     $this->renderView('user/all', $data);
   }
  
@@ -32,7 +34,7 @@ class UserController{
       'user' => $user
     ];
  
-    // Rendu avec layout
+    // rendu avec layout
     $this->renderView('user/one', $data);
   }
 
@@ -70,8 +72,9 @@ class UserController{
     $_SESSION['name'] = $user['name'];
     $_SESSION['firstname'] = $user['firstname'];
     $_SESSION['email'] = $user['email'];
+    $_SESSION['role'] = $user['role'];
 
-    header('Location: findAll');
+    header('Location: /activite/findAll');
     return;
   }
 
@@ -118,6 +121,8 @@ class UserController{
   {
     session_unset();
     session_destroy();
-    header('Location: findAll');
+    
+    header("Location: /user/logIn");
+    exit();
   }
 }

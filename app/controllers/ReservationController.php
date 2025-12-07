@@ -1,99 +1,121 @@
-<?php
-
+<?php 
+require_once './app/models/ActiviteModel.php';
 require_once './app/utils/Render.php';
 require_once './app/models/ReservationModel.php';
+require_once './app/utils/Auth.php';
 
-class ReservationController{
-
+class ReservationController {
     use Render;
+    use Auth;
 
-  public function findAll(): void
-  {
-    $reservationModel = new reservationModel();
-    $reservations = $reservationModel->getAllReservations();
- 
-    // Prépatation du tableau à envoyer au layout
-    $data = [
-      'title' => 'Liste des reservations',
-      'reservations' => $reservations
-    ];
- 
-    // Rendu avec layout
-    $this->renderView('reservation/all', $data);
-  }
- 
-  public function findOneById(int $id): void
-  {
-    $reservationModel = new ReservationModel();
-    $reservation = $reservationModel->getReservationsByUserId($id);
-    $data = [
-      'title' => 'Une réservation',
-      'reservation' => $reservation
-    ];
+    /* affiche toutes les réservations */
+    public function findAll(): void
+    {
+        $reservationModel = new ReservationModel();
+        $reservations = $reservationModel->getAllReservations();
 
-    $sessionReservation = $reservation[0]; 
-    
-    $_SESSION['userId'] =  $sessionReservation['userId'];
-    $_SESSION['activityId'] =  $sessionReservation['activityId'];
-    $_SESSION['ReservationDate'] =  $sessionReservation['ReservationDate'];
- 
-    // Rendu avec layout
-    $this->renderView('reservation/one', $data);
-  }
+        $data = [
+            'title' => 'Liste des réservations',
+            'reservations' => $reservations
+        ];
 
-    public function AjouterReservation(): void
-  {
-    $reservationModel = new ReservationModel();//création du model
-    $data = [
-      'title' => 'ajouter une réservation',
-    ];
-
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') { // si la methode n'est pas une methode POST
-      $this->renderView('reservation/inserer', $data);
-      return;
+        $this->renderView('reservation/all', $data);
     }
-    $userId = $_POST['userId'] ?? null;
-    $activityId = $_POST['activityId'];
 
-    if (empty($userId) || empty($activityId)) {// si c'est vide 
-        $data['error'] = 'champ vides';
+    /* affiche les réservations d'un utilisateur */
+public function findOneById(int $id): void
+{
+    $reservationModel = new ReservationModel();
+    $reservations = $reservationModel->getReservationsByUserId($id);
+
+    $data = [
+        'title' => 'Mes réservations',
+        'reservations' => $reservations
+    ];
+
+    $this->renderView('reservation/one', $data);
+}
+
+    /* form pour ajouter une résa */
+   public function inserer(int $activityId = null): void
+{
+    $reservationModel = new ReservationModel();
+    $activiteModel = new ActiviteModel(); // ← OBLIGATOIRE !
+
+    //  afficher le formulaire
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+
+      $activite = $activiteModel->getActivityById($activityId);
+        $data = [
+            'title' => 'Ajouter une réservation',
+            'activityId' => $activityId,
+            'activityName' => $activite['name'] ?? "Activité inconnue",
+        ];
+
         $this->renderView('reservation/inserer', $data);
         return;
     }
 
-    $reservation = $reservationModel->createReservation( $userId, $activityId);// utilisé la methode create du model
+    // traitement
+    $userId = $_SESSION['id'] ?? null;
+    $activityId = $_POST['activityId'] ?? null;
+    
 
-    if ($reservation == false) {// si le résultat de la methode est false alors on envoie un message d'erreur
-      $data['error'] = 'userId or activityId incorrect';
-      $this->renderView('reservation/inserer', $data);
-      return;
+    if (empty($userId) || empty($activityId)) {
+        $data = [
+            'title' => 'Ajouter une réservation',
+            'error' => 'Champs vides',
+            'activityId' => $activityId
+        ];
+        $this->renderView('reservation/inserer', $data);
+        return;
     }
 
+    // vérification des places restantes
+    $activite = $activiteModel->getActivityById($activityId);
 
-   
-
-    header('Location: findAll');
-    return;
-  }
-
-   public function enleverReservation(): void
-   {
-      $reservationModel = new ReservationModel();
-      $data = [
-      'title' => 'enlever une réservation',
-    ];
-     $reservation = $reservationModel->cancelReservation( $userID, $activityId);// utilisé la methode create du model
-
-      if ($reservation == false) {// si le résultat de la methode est false alors on envoie un message d'erreur
-      $data['error'] = 'echec de la suppression';
-      $this->renderView('reservation/inserer', $data);
-      return;
+    if (!$activite) {
+        $data['error'] = "Activité introuvable.";
+        $this->renderView('reservation/inserer', $data);
+        return;
     }
 
-     $this->renderView('reservation/all', $data);
-   }
+    if ($activite['seatsLeft'] <= 0) {
+        $data['error'] = "Cette activité est complète.";
+        $this->renderView('reservation/inserer', $data);
+        return;
+    }
 
- 
-  
+    // enregistrer la résa
+    $reservationModel->createReservation($userId, $activityId);
+
+    // enlever les places
+    $activiteModel->decreaseSeats($activityId);
+
+    header("Location: /reservation/findOneById/$userId");
+    exit();
+}
+
+    /* annule une réservation */
+    public function enleverReservation(int $reservationId): void
+    {
+        $reservationModel = new ReservationModel();
+
+        $success = $reservationModel->cancelReservation($reservationId); // met etat = 0
+
+        if (!$success) {
+            $data = [
+                'title' => 'Annuler une réservation',
+                'error' => 'Échec de l’annulation'
+            ];
+            $this->renderView('reservation/one', $data);
+            return;
+        }
+
+        // redirection vers la liste des activités
+        $userId = $_SESSION['id'];
+        header("Location: /activite");
+        exit();
+    }
 
 }

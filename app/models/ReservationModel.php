@@ -7,6 +7,7 @@ Class ReservationModel extends Bdd {
     parent::__construct();
   }
  
+  // crée une réserva pour un utilisateur
   public function createReservation(int $userId, int $activityId) : bool
   {
         $now = new DateTime();
@@ -19,31 +20,43 @@ Class ReservationModel extends Bdd {
     ]);
         return True;  
   }
-  public function getReservationsByUserId(int $userId) : array
+  // récupère les résa d’un utilisateur
+  public function getReservationsByUserId(int $userId): array
 {
-    $sql = "SELECT * FROM `reservations` WHERE `userId` = $userId";
+    $sql = "
+        SELECT r.*, a.name AS activityName
+        FROM reservations r
+        JOIN activities a ON r.activityId = a.id
+        WHERE r.userId = ?
+    ";
+
+    $stmt = $this->co->prepare($sql);
+    $stmt->execute([$userId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+    
+    // récupère ttes les résa avec activité + utilisateur
+     public function getAllReservations(): array
+{
+    $sql = "
+        SELECT r.*, a.name AS activityName, u.firstname, u.name AS userName
+        FROM reservations r
+        JOIN activities a ON r.activityId = a.id
+        JOIN users u ON r.userId = u.id
+    ";
+
     $stmt = $this->co->prepare($sql);
     $stmt->execute();
 
-    $reservations = $stmt->fetchAll(\PDO::FETCH_ASSOC); 
-    
-    return $reservations;
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-     public function getAllReservations() : array
-   {
-      $stmt = $this->co->prepare("SELECT * FROM `reservations`");
-      $stmt->execute();
-      $reservations = $stmt->fetchAll(); 
-      return $reservations;
-   }
- 
-   public function cancelReservation(int $reservationId) : bool
-   {
-      $query = "DELETE FROM `reservations` WHERE reservations['reservationId'] == '$reservationId' ";
-      $reservations = $this->co->prepare($query);
-      $reservations->execute();
-      return True;  
-   }
+ // supprime une réservation 
+    public function cancelReservation(int $reservationId): bool
+    {
+      $stmt = $this->co->prepare("DELETE FROM reservations WHERE activityId = ?");
+    return $stmt->execute([$activityId]);
+}
  
   }

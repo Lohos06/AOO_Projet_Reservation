@@ -1,0 +1,169 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+    width: 100%;
+}
+
+
+h2 {
+    margin-top: 2%;
+    color: #0E4F37;
+    text-align: center;
+}
+.left-card {
+    width: 250px;
+    min-height: 250px;
+    background: #F4F1E6;
+    border: 2px solid #0b5f43;
+    border-radius: 14px;
+    padding: 20px;
+    color: #0b5f43;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+
+.left-content h2 {
+    margin-top: 0;
+    color: #0b5f43;
+}
+
+.left-content p {
+    margin: 6px 0;
+    color: #0b5f43;
+}
+
+.right-card {
+    width: 700px;
+    background:#F4F1E6;
+    border: 2px solid #0b5f43;
+    border-radius: 14px;
+    padding: 25px;
+    color: #0b5f43;
+}
+
+.right-card h1 {
+    margin-top: 0;
+    color: #0b5f43;
+}
+
+.right-card h2 {
+    margin-top: 20px;
+    color: #0b5f43;
+}
+
+.reservation-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.reservation-card {
+    background: #F4F1E6;
+    border: 2px solid #0b5f43;
+    padding: 20px;
+    border-radius: 12px;
+    color: #0b5f43;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.reservation-card h3 {
+    margin-top: 0;
+    font-size: 1.3rem;
+    border-bottom: 1px solid rgba(11, 95, 67, 0.4);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    color: #0b5f43;
+}
+
+.reservation-card p {
+    margin: 6px 0;
+    color: #0b5f43;
+}
+
+.btn-delete {
+    display: inline-block;
+    margin-top: 10px;
+    background: #0b5f43;
+    padding: 10px 18px;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.btn-delete:hover {
+    background: #094b35;
+    transform: scale(1.05);
+}
+
+.right-card hr {
+    border: none;
+    height: 1px;
+    background: rgba(11, 95, 67, 0.3);
+    margin: 10px 0 20px 0;
+}
+/* Responsive  */
+@media (max-width: 1000px) {
+    .container {
+        flex-direction: column;
+        gap: 25px;
+        padding: 30px;
+    }
+
+    .left-card {
+        width: 80%;
+        min-height: auto;
+        text-align: center;
+    }
+
+    .right-card {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .reservation-list {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .left-card {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .right-card {
+        width: 100%;
+        padding: 18px;
+    }
+
+    .reservation-list {
+        grid-template-columns: 1fr;
+    }
+
+    .reservation-card {
+        padding: 15px;
+    }
+
+    .reservation-card h3 {
+        font-size: 1.15rem;
+    }
+
+    .btn-delete {
+        padding: 8px 14px;
+        font-size: 0.9rem;
+    }
+}
