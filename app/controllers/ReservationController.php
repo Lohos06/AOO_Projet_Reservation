@@ -112,9 +112,8 @@ public function findOneById(int $id): void
             return;
         }
 
-        // redirection vers la liste des activités
         $userId = $_SESSION['id'];
-        header("Location: /activite");
+        header("Location: /reservation/findOneById/$userId");
         exit();
     }
 

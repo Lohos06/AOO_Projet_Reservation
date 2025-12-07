@@ -52,11 +52,9 @@ Class ReservationModel extends Bdd {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
- // supprime une réservation 
     public function cancelReservation(int $reservationId): bool
     {
-      $stmt = $this->co->prepare("DELETE FROM reservations WHERE activityId = ?");
-    return $stmt->execute([$activityId]);
-}
- 
+        $stmt = $this->co->prepare("DELETE FROM reservations WHERE id = ?");
+        return $stmt->execute([$reservationId]);
+    }
   }

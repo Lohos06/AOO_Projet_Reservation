@@ -32,7 +32,7 @@
                     <p><strong>Date de réservation :</strong> <?= htmlspecialchars($resa['ReservationDate']) ?></p>
 
                     <a class="btn-delete"
-                      href="/reservation/enleverReservation/<?= $_SESSION['id'] ?>/<?= $resa['activityId'] ?>"
+                      href="/reservation/enleverReservation/<?= $resa['id'] ?>"
                       onclick="return confirm('Voulez-vous vraiment supprimer cette réservation ?');">
                       Supprimer la réservation
                     </a>
